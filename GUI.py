@@ -1,47 +1,42 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QProgressBar
+from PyQt6.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QProgressBar
 
 from downloader import Downloader
 
 
-app = QApplication([])
+class DownloadWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Youtube Downloader")
+        self.resize(500, 500)
 
-# a input field for the url and a button to start the download
-# a label to show the progress of the download
+        self.setup_ui()
 
-window = QWidget()
-window.setWindowTitle("Youtube Downloader")
-window.resize(500, 500)
+    def setup_ui(self):
+        self.url_label = QLabel("URL", self)
+        self.url_label.move(10, 10)
 
+        self.url_input = QLineEdit(self)
+        self.url_input.move(10, 30)
 
-url_label = QLabel("URL", window)
-url_label.move(10, 10)
+        self.path_label = QLabel("Path", self)
+        self.path_label.move(10, 60)
 
-url_input = QLineEdit(window)
-url_input.move(10, 30)
+        self.path_input = QLineEdit(self)
+        self.path_input.move(10, 80)
 
-path_label = QLabel("Path", window)
-path_label.move(10, 60)
+        self.progress_label = QLabel("Progress", self)
+        self.progress_label.move(10, 110)
 
-path_input = QLineEdit(window)
-path_input.move(10, 80)
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.move(10, 130)
 
-progress_label = QLabel("Progress", window)
-progress_label.move(10, 110)
+        self.start_button = QPushButton("Start", self)
+        self.start_button.move(10, 160)
 
-progress_bar = QProgressBar(window)
-progress_bar.move(10, 130)
+        self.start_button.clicked.connect(self.start_download)
 
-start_button = QPushButton("Start", window)
-start_button.move(10, 160)
-
-def start_download():
-    url = url_input.text()
-    path = path_input.text()
-    downloader = Downloader(url, path)
-    downloader.download()
-
-start_button.clicked.connect(start_download)
-
-window.show()
-app.exec()
-
+    def start_download(self):
+        url = self.url_input.text()
+        path = self.path_input.text()
+        downloader = Downloader(url, path)
+        downloader.download()
