@@ -8,7 +8,6 @@ class DownloadWindow(QWidget):
         super().__init__()
         self.setWindowTitle("Youtube Downloader")
         self.resize(500, 500)
-        self.path_input = ""
         self.setup_ui()
 
 
@@ -57,7 +56,6 @@ class DownloadWindow(QWidget):
 
 
     def start_download(self):
-        print(self.path_input.text(), self.url_input.text(), self.quality_input.currentText())
         url = self.url_input.text()
         path = self.path_input.text()
         quality = self.quality_input.currentText()
